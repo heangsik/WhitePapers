@@ -1,9 +1,7 @@
-<<<<<<< HEAD
-=======
 # Python Project Initialization
 
->>>>>>> 136a6440051ef7daf718d4b4991cbdc8d22351b9
 - [Python Project Initialization](#python-project-initialization)
+- [Python Project Initialization](#python-project-initialization-1)
   - [1. 프로젝트 생성](#1-프로젝트-생성)
   - [2. pip업데이트](#2-pip업데이트)
   - [3. Streamlit](#3-streamlit)
@@ -12,7 +10,6 @@
   - [4. FastAPI](#4-fastapi)
     - [설치](#설치-1)
     - [실행](#실행)
-<<<<<<< HEAD
   - [env](#env)
     - [설치](#설치-2)
     - [사용](#사용)
@@ -21,13 +18,6 @@
     - [사용](#사용-1)
   - [Test](#test)
   - [설치](#설치-4)
-=======
-  - [logger](#logger)
-    - [설치](#설치-2)
-    - [사용](#사용)
-  - [Test](#test)
-  - [설치](#설치-3)
->>>>>>> 136a6440051ef7daf718d4b4991cbdc8d22351b9
   - [VSCODE에서 가상 환경 실행](#vscode에서-가상-환경-실행)
     - [터미널 환경 설정](#터미널-환경-설정)
     - [Python Interpreter 설정](#python-interpreter-설정)
@@ -36,7 +26,6 @@
     - [온라인 설치](#온라인-설치)
     - [오프라인 설치](#오프라인-설치)
     - [확인](#확인)
-<<<<<<< HEAD
   - [poetry](#poetry)
     - [설치](#설치-5)
     - [프로젝트 생성](#프로젝트-생성)
@@ -47,10 +36,6 @@
 
 # Python Project Initialization
 
-=======
-  - [참고 링크](#참고-링크)
-
->>>>>>> 136a6440051ef7daf718d4b4991cbdc8d22351b9
 ## 1. 프로젝트 생성
 
 - 희망하는 위치에 프로젝트 디렉토리를 만든다.
@@ -109,7 +94,6 @@ python -m pip install --upgrade pip
 - "server.app:app" server폴더 않에 app파일안에 app 변수를 뜻한다.
 - "main:app" main파일에 app변수를 뜻한다.
 
-<<<<<<< HEAD
 ## env
 
 ### 설치
@@ -120,14 +104,6 @@ python -m pip install --upgrade pip
 
 > .env 파일 생성
 
-```env
-
-```
-
->
-
-=======
->>>>>>> 136a6440051ef7daf718d4b4991cbdc8d22351b9
 ## logger
 
 ### 설치
@@ -193,7 +169,6 @@ pip install pytest pytest-asyncio httpx
 
 - pip list
 
-<<<<<<< HEAD
 ## poetry
 
 ### 설치
@@ -216,8 +191,6 @@ poetry config virtualenvs.path "./.venv"
 poetry install
 ```
 
-=======
->>>>>>> 136a6440051ef7daf718d4b4991cbdc8d22351b9
 ## 참고 링크
 
 [참고링크](https://velog.io/@hongjunland/FastAPI-%ED%86%B5%ED%95%A9%ED%85%8C%EC%8A%A4%ED%8A%B8-TestClient)
