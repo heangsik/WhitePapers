@@ -661,17 +661,19 @@
 - Recoil.js 생성
 
   ```JavaScript
-  // /common/recoil/Recoil.js
+  // /common/recoil/RecoilWrapper.js
   'use client'
 
   import { ReactNode } from 'react'
   import { RecoilRoot } from 'recoil'
 
-  type Props = {
+  type RecoilRootWrapperProps = {
   children: ReactNode
   }
 
-  export default function Recoil({ children }: Props) {
+  export default function RecoilWrapper({
+   children
+   }: RecoilRootWrapperProps) {
   return <RecoilRoot>{children}</RecoilRoot>
   }
   ```
@@ -681,7 +683,7 @@
   ```JavaScript
    import "./globals.css";
    import { Inter } from "next/font/google";
-   import { RecoilRoot } from "@/app/common/recoil"; // <-- 추가
+   import { RecoilWrapper } from "@/app/common/recoil"; // <-- 추가
 
    const inter = Inter({ subsets: ["latin"] });
 
@@ -696,7 +698,7 @@
       return (
          <html lang="en">
                <body className={inter.className}>
-                  <Recoil>{children}</Recoil> //<-div를 Recoil로 변경
+                  <RecoilWrapper>{children}</RecoilWrapper> //<-div를 RecoilWrapper 변경
                </body>
          </html>
       );

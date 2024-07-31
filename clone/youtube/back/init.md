@@ -8,6 +8,9 @@
   - [테스트 방법](#테스트-방법)
     - [저장시 자동 테스트](#저장시-자동-테스트)
       - [실행](#실행)
+  - [MOCK사용](#mock사용)
+    - [DB Mock](#db-mock)
+    - [Method Mock](#method-mock)
 - [프론트](#프론트)
   - [프로젝트 생성](#프로젝트-생성-1)
 
@@ -119,6 +122,68 @@ poetry add fastapi uvicorn[standard] python-dotenv loguru "python-jose[cryptogra
 - ptw tests/ : tests 디렉토리 감시
 - ptw -- -v : 테스트 메서드 출력
 - ptw -- -k "메서드명": 감시하고자 하는 메서드 지정
+- 예시
+  - ptw tests/ -- -s -v -k test_A
+
+## MOCK사용
+
+### DB Mock
+
+```python
+import unittest
+from unittest.mock import MagicMock
+from back.member import find_user_of_id
+from back.database_model import Member
+
+class TestMemberFunctions(unittest.TestCase):
+
+    def setUp(self):
+        self.db = MagicMock()  # Mocked database session
+
+    def test_find_user_of_id_found(self):
+        # Mocking the return value of the query
+        mock_member = Member(id="testuser", name="Test User", password="hashed_password")
+        self.db.query.return_value.filter.return_value.first.return_value = mock_member
+
+        result = find_user_of_id("testuser", self.db)
+
+        self.assertIsNotNone(result)
+        self.assertEqual(result.id, "testuser")
+        self.assertEqual(result.name, "Test User")
+
+    def test_find_user_of_id_not_found(self):
+        # Mocking the return value when no member is found
+        self.db.query.return_value.filter.return_value.first.return_value = None
+
+        result = find_user_of_id("nonexistentuser", self.db)
+
+        self.assertIsNone(result)
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+### Method Mock
+
+```python
+import unittest
+from unittest.mock import patch
+from back.member import syckTest
+
+class TestSyckTestFunction(unittest.TestCase):
+
+    @patch('back.member.testReturnValue')  # Mocking testReturnValue function
+    def test_syckTest(self, mock_testReturnValue):
+        # Mocking the return value of testReturnValue
+        mock_testReturnValue.return_value = {"mocked_key": "mocked_value"}
+
+        result = syckTest()
+
+        self.assertEqual(result, {"mocked_key": "mocked_value"})  # Check if the result matches the mocked value
+
+if __name__ == "__main__":
+    unittest.main()
+```
 
 # 프론트
 
