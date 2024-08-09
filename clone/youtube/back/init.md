@@ -9,6 +9,7 @@
     - [저장시 자동 테스트](#저장시-자동-테스트)
       - [실행](#실행)
   - [MOCK사용](#mock사용)
+    - [설치](#설치)
     - [DB Mock](#db-mock)
     - [Method Mock](#method-mock)
 - [프론트](#프론트)
@@ -127,6 +128,10 @@ poetry add fastapi uvicorn[standard] python-dotenv loguru "python-jose[cryptogra
 
 ## MOCK사용
 
+### 설치
+
+- poetry add pytest-mock
+
 ### DB Mock
 
 ```python
@@ -166,23 +171,40 @@ if __name__ == "__main__":
 ### Method Mock
 
 ```python
-import unittest
-from unittest.mock import patch
-from back.member import syckTest
 
-class TestSyckTestFunction(unittest.TestCase):
+@pytest.fixture
+def test_apps():
+    pass
 
-    @patch('back.member.testReturnValue')  # Mocking testReturnValue function
-    def test_syckTest(self, mock_testReturnValue):
-        # Mocking the return value of testReturnValue
-        mock_testReturnValue.return_value = {"mocked_key": "mocked_value"}
+def test_U_유저_중복_확인_withMock(test_apps, mocker):
+    '''
+    디비 저장 없이 중복 체크
+    '''
+    mock_testReturnValue = mocker.patch('back.member.testReturnValue', return_value={"mocked_key": "mocked_value"})
 
-        result = syckTest()
+    # 테스트용 데이터베이스 세션 생성
+    db = MagicMock() # Mock database
 
-        self.assertEqual(result, {"mocked_key": "mocked_value"})  # Check if the result matches the mocked value
+    # 테스트용 회원 데이터
+    member_data = MemberCreate(
+        id="newuser",
+        name="New User",
+        password1="newpassword",
+        password2="newpassword",
+        email="newuser@test.com"
+    )
+    # mocking return data
+    mock_testReturnValue.return_value = member_data
 
-if __name__ == "__main__":
-    unittest.main()
+
+    with pytest.raises(HTTPException) as exc_info:
+        check_duple_id(member_data.id, db)
+
+    print(exc_info)
+    # HTTPException(status_code=400, detail="이미 등록되어 있는 ID")
+    assert exc_info.value.status_code == 400, "상태코드는 400 이어야 한다."
+    assert exc_info.value.detail == "이미 등록되어 있는 ID", "상세 메시지는 '이미 등록되어 있는 ID' 이어야 한다."
+
 ```
 
 # 프론트

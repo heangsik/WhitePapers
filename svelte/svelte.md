@@ -7,6 +7,8 @@
   - [프로젝트 설치](#프로젝트-설치)
   - [포트 변경](#포트-변경)
   - [tailwind (with SvelteKit)설치](#tailwind-with-sveltekit설치)
+    - [Svelte](#svelte)
+    - [SvelteKit](#sveltekit)
   - [Test](#test)
 
 ## 프로젝트 설치
@@ -47,6 +49,37 @@
 ```
 
 ## tailwind (with SvelteKit)설치
+
+### Svelte
+
+- 설치
+  ```shell
+    npm install -D tailwindcss postcss autoprefixer svelte-preprocess
+    npx tailwindcss init tailwind.config.cjs -p
+  ```
+- 설정 변경
+  - tailwind.config.cjs
+    ```js
+    /** @type {import('tailwindcss').Config} */
+    module.exports = {
+      // **here**
+      content: ['./src/**/*.{html,js,svelte,ts}'], <-- 설정 변경
+      theme: {
+        extend: {},
+      },
+      plugins: [],
+    }
+    ```
+- 파일 수정
+  - /src/app.css
+    ```css
+    /*파일 가장 위에 추가*/
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+    ```
+
+### SvelteKit
 
 - 설치
 
