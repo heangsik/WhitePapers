@@ -9,7 +9,12 @@
   - [tailwind (with SvelteKit)설치](#tailwind-with-sveltekit설치)
     - [Svelte](#svelte)
     - [SvelteKit](#sveltekit)
+  - [Code Formatting](#code-formatting)
   - [Test](#test)
+  - [Store](#store)
+    - [Store를 선언 후 내부의 값을 확인 하는법](#store를-선언-후-내부의-값을-확인-하는법)
+  - [SPA Router](#spa-router)
+    - [설치](#설치)
 
 ## 프로젝트 설치
 
@@ -148,6 +153,24 @@
     // .......
   ```
 
+## Code Formatting
+
+- extention prettier-code formatter 설치
+- file->preferences->setting
+- Default Fomatter 검색 후 prettier-code formatter 선택
+- format on save 검색 후 체크 박스 선택
+- extention Svelte for VS Code 설치
+  - setting.json(User) 내용추가
+  ```JSON
+  {
+    .....~~~~~
+    "editor.formatOnSave": true,
+    "[svelte]": {
+      "editor.defaultFormatter": "svelte.svelte-vscode"
+    }
+  }
+  ```
+
 ## Test
 
 - vitest 설치
@@ -182,4 +205,15 @@
   });
   ```
 
--
+## Store
+
+### Store를 선언 후 내부의 값을 확인 하는법
+
+> 간단한 store인 경우 선언 후 바로 값을 읽어 들일 수 있지만 store내부에 로직이 있는 경우는 불가능 하다.
+> 이때 선언한 값 앞에 $를 붙이면 저장된 값을 직접 접근 할수 있다
+
+## SPA Router
+
+### 설치
+
+- npm install svelte-spa-router
