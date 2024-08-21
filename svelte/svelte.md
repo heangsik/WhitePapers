@@ -15,6 +15,7 @@
     - [Store를 선언 후 내부의 값을 확인 하는법](#store를-선언-후-내부의-값을-확인-하는법)
   - [SPA Router](#spa-router)
     - [설치](#설치)
+    - [사용법](#사용법)
 
 ## 프로젝트 설치
 
@@ -217,3 +218,45 @@
 ### 설치
 
 - npm install svelte-spa-router
+
+### 사용법
+
+- Router 생성
+
+```js
+<script>
+  import Home from "./lib/components/Home.svelte";
+  import About from "./lib/components/About.svelte";
+  import News from "./lib/components/News.svelte";
+  import Router from "svelte-spa-router";
+  import Detail from "./lib/components/Detail.svelte";
+
+  const routes = {
+    "/": Home,
+    "/about": About,
+    "/news": News,
+    "/detail/:id": Detail,
+  };
+</script>
+```
+
+- 링크 연결
+
+```js
+<script>
+  import { link } from "svelte-spa-router";
+</script>
+  <ul>
+    <li><a use:link href="/">Home</a></li>
+    <li><a use:link href="/about">About</a></li>
+    <li><a use:link href="/news">News</a></li>
+    <li><a use:link href="/contact">Contact</a></li>
+  </ul>
+  -- 또는
+  <ul>
+    <li><a href="#/">Home</a></li>
+    <li><a href="#/about">About</a></li>
+    <li><a href="#/news">News</a></li>
+    <li><a href="#/contact">Contact</a></li>
+  </ul>
+```
