@@ -16,6 +16,13 @@
   - [SPA Router](#spa-router)
     - [설치](#설치)
     - [사용법](#사용법)
+  - [vitejs root 설정](#vitejs-root-설정)
+    - [vite.config.js 수정](#viteconfigjs-수정)
+    - [jsconfig.json 수정](#jsconfigjson-수정)
+  - [IConify](#iconify)
+    - [설치](#설치-1)
+    - [사용](#사용)
+    - [참고](#참고)
 
 ## 프로젝트 설치
 
@@ -260,3 +267,62 @@
     <li><a href="#/contact">Contact</a></li>
   </ul>
 ```
+
+## vitejs root 설정
+
+### vite.config.js 수정
+
+```JS
+import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
+import { configDefaults } from "vitest/config";
+
+export default defineConfig({
+  plugins: [svelte()],
+  // 아래 내용 추가
+  resolve: {
+    alias: {
+      $: "/src",
+      $lib: "/src/lib", // 만약 더 추가 하고 싶으면 추가
+      },
+  },
+});
+
+```
+
+### jsconfig.json 수정
+
+```JSON
+
+  "compilerOptions": {
+    // 아래 내용 추가
+    "baseUrl": ".",
+    "paths": {
+      "$/*": ["src/*"]
+    }
+  },
+```
+
+## IConify
+
+### 설치
+
+```bash
+npm i -D @iconify/svelte
+```
+
+### 사용
+
+```html
+<script>
+  import Icon from "@iconify/svelte";
+</script>
+
+<div>
+  <Icon icon="mdi:home" style="font-size: 24px;" />
+</div>
+```
+
+### 참고
+
+[iconify svelte](https://iconify.design/docs/icon-components/svelte/#installation)
