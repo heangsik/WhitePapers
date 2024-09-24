@@ -23,6 +23,12 @@
     - [설치](#설치-1)
     - [사용](#사용)
     - [참고](#참고)
+  - [Supabase 사용](#supabase-사용)
+    - [설치](#설치-2)
+    - [사용](#사용-1)
+  - [StoryBook](#storybook)
+    - [설치](#설치-3)
+    - [실행](#실행)
 
 ## 프로젝트 설치
 
@@ -326,3 +332,30 @@ npm i -D @iconify/svelte
 ### 참고
 
 [iconify svelte](https://iconify.design/docs/icon-components/svelte/#installation)
+
+## Supabase 사용
+
+### 설치
+
+```bash
+npm i @supabase/supabase-js
+```
+
+### 사용
+
+## StoryBook
+
+### 설치
+
+```bash
+npx storybook@latest init
+
+```
+
+### 실행
+
+```bash
+npm run storybook
+```
+
+[참고사이트](https://storybook.js.org/docs/get-started/frameworks/sveltekit?renderer=svelte)
