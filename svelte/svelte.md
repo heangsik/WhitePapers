@@ -19,6 +19,7 @@
   - [vitejs root 설정](#vitejs-root-설정)
     - [vite.config.js 수정](#viteconfigjs-수정)
     - [jsconfig.json 수정](#jsconfigjson-수정)
+  - [경로 별칭 설정](#경로-별칭-설정)
   - [IConify](#iconify)
     - [설치](#설치-1)
     - [사용](#사용)
@@ -309,6 +310,29 @@ export default defineConfig({
   },
 ```
 
+## 경로 별칭 설정
+
+- 안해봤음
+
+```js
+import { sveltekit } from "@sveltejs/kit/vite";
+import path from "path";
+
+/** @type {import('vite').UserConfig} */
+const config = {
+  plugins: [sveltekit()],
+  // 아래 내용 추가
+  resolve: {
+    alias: {
+      $components: path.resolve("./src/components"),
+      $assets: path.resolve("./src/assets"),
+    },
+  },
+};
+
+export default config;
+```
+
 ## IConify
 
 ### 설치
@@ -349,6 +373,8 @@ npm i @supabase/supabase-js
 
 ```bash
 npx storybook@latest init
+or
+npx sb@latest init
 
 ```
 
@@ -359,3 +385,6 @@ npm run storybook
 ```
 
 [참고사이트](https://storybook.js.org/docs/get-started/frameworks/sveltekit?renderer=svelte)
+
+- MockDate
+  - [link](https://github.com/boblauer/MockDate)
