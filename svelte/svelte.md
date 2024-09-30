@@ -5,10 +5,16 @@
 - [SVELTE 셋팅](#svelte-셋팅)
   - [목차](#목차)
   - [프로젝트 설치](#프로젝트-설치)
+    - [svelte](#svelte)
+      - [svelteKit](#sveltekit)
   - [포트 변경](#포트-변경)
+  - [BUILD경로 변경](#build경로-변경)
+  - [배포시 주의점](#배포시-주의점)
+  - [구동 모드](#구동-모드)
+    - [env 분리](#env-분리)
   - [tailwind (with SvelteKit)설치](#tailwind-with-sveltekit설치)
-    - [Svelte](#svelte)
-    - [SvelteKit](#sveltekit)
+    - [Svelte](#svelte-1)
+    - [SvelteKit](#sveltekit-1)
   - [Code Formatting](#code-formatting)
   - [Test](#test)
   - [Store](#store)
@@ -33,14 +39,18 @@
 
 ## 프로젝트 설치
 
-- svelte
-  ```
-    npm create svelte@latest project_name
-    cd procject name
-    npm i
-    npm run dev
-  ```
-- svelteKit
+### svelte
+
+```
+  npm create svelte@latest project_name
+  cd procject name
+  npm i
+  npm run dev
+```
+
+#### svelteKit
+
+- npm
 
   ```
     npm init svelte@next project_name
@@ -67,6 +77,65 @@
     "dev": "webpack serve --content-base public --port 5566"
   }
 ```
+
+## BUILD경로 변경
+
+- svelte.config.js 수정
+
+  ```js
+  import adapter from "@sveltejs/adapter-auto";
+
+  /** @type {import('@sveltejs/kit').Config} */
+  const config = {
+    kit: {
+      adapter: adapter({ out: "build" }), // <-- 수정
+    },
+  };
+
+  export default config;
+  ```
+
+## 배포시 주의점
+
+- 배포 후 구동시 프로젝트가 구동이 안되는경우가 있다.
+- 이경우 설정 파일의 adapter를 설치 후 변경해줘야 한다.
+
+  - adapter 설치
+
+  ```
+    npm i @sveltejs/adapter-node` 또는
+    npm i @sveltejs/adapter-vercel 등 더 있다.
+  ```
+
+  - svelte.config.js 수정
+
+  ```js
+  // import adapter from '@sveltejs/adapter-auto';
+  import adapter from "@sveltejs/adapter-node"; //<-- 수정
+
+  /** @type {import('@sveltejs/kit').Config} */
+  const config = {
+    kit: {
+      adapter: adapter(),
+    },
+  };
+
+  export default config;
+  ```
+
+## 구동 모드
+
+```json
+    "dev": "vite dev --mode prod",
+    "build": "vite build --mode prod",
+```
+
+### env 분리
+
+| 파일      | 모드             | 구동법              |
+| --------- | ---------------- | ------------------- |
+| .env      | 일반 구동시      | npm run dev         |
+| .env.prod | prod 모드 구동시 | npm run --mode prod |
 
 ## tailwind (with SvelteKit)설치
 
