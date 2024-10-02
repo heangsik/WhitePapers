@@ -8,34 +8,46 @@
 
 ### 사용
 
-```css
-<style lang="scss">
-  header {
-    text-align: center;
-    padding: 25px;
-    margin-bottom: 30px;
-    .logo {
+- +layout.svelte 수정
+
+  ```js
+  ....
+  <style lang="scss" global>
+    @import "../app.scss";
+  </style>
+
+  ```
+
+- +page.svelte 수정
+
+  ```css
+  <style lang="scss">
+    header {
+      text-align: center;
+      padding: 25px;
       margin-bottom: 30px;
-    }
-    nav {
-      ul {
-        list-style: none;
-        li {
-          display: inline-block;
-          margin: 0 1em;
-          a {
-            text-decoration: none;
-            color: #333;
-            &:hover {
-              opacity: 0.7;
+      .logo {
+        margin-bottom: 30px;
+      }
+      nav {
+        ul {
+          list-style: none;
+          li {
+            display: inline-block;
+            margin: 0 1em;
+            a {
+              text-decoration: none;
+              color: #333;
+              &:hover {
+                opacity: 0.7;
+              }
             }
           }
         }
       }
     }
-  }
-</style>
-```
+  </style>
+  ```
 
 ## TIPS
 

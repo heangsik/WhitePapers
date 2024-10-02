@@ -103,8 +103,8 @@
   - adapter 설치
 
   ```
-    npm i @sveltejs/adapter-node` 또는
-    npm i @sveltejs/adapter-vercel 등 더 있다.
+    npm i -D @sveltejs/adapter-node` 또는
+    npm i -D @sveltejs/adapter-vercel 등 더 있다.
   ```
 
   - svelte.config.js 수정
