@@ -1,5 +1,13 @@
 # CSS
 
+- [CSS](#css)
+  - [SCSS 설정](#scss-설정)
+    - [설치](#설치)
+    - [사용](#사용)
+  - [TIPS](#tips)
+    - [하단에 베너 고정 시키기](#하단에-베너-고정-시키기)
+    - [화명 중앙에 배치 하기](#화명-중앙에-배치-하기)
+
 ## SCSS 설정
 
 ### 설치
@@ -7,6 +15,16 @@
 > npm install -D sass
 
 ### 사용
+
+- src/app.scss파일 생성
+
+```css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+```
 
 - +layout.svelte 수정
 

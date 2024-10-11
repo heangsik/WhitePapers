@@ -26,6 +26,7 @@
     - [vite.config.js 수정](#viteconfigjs-수정)
     - [jsconfig.json 수정](#jsconfigjson-수정)
   - [경로 별칭 설정](#경로-별칭-설정)
+  - [비동기 처리](#비동기-처리)
   - [IConify](#iconify)
     - [설치](#설치-1)
     - [사용](#사용)
@@ -400,6 +401,28 @@ const config = {
 };
 
 export default config;
+```
+
+## 비동기 처리
+
+- #await를 사용하여 처리 한다.
+
+```js
+<script>
+import Button from './Components/Button.svelte'
+let promiseValue = new Promise((res)=>{
+	setTimeout(()=>{
+		res("DONE!")
+	},1500)
+});
+</script>
+
+{#await promiseValue}
+	Loading...
+{:then value}
+	{value}
+{/await}
+
 ```
 
 ## IConify
