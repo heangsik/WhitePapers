@@ -115,6 +115,8 @@ bootstrap();
 > 입력 후 파일 생성 확인 movie/movie.controller.ts  
 > root/nest g s Movie  
 > 입력 후 파일 생성 확인 movie/moive.service.ts
+>
+> nest g s /movie/Movie --flat -> 하위로 디렉토리를 생성하지 않는다.
 
 - controller.ts
 

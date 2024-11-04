@@ -8,6 +8,11 @@
     - [svelte](#svelte)
       - [svelteKit](#sveltekit)
   - [포트 변경](#포트-변경)
+  - [bootstrap](#bootstrap)
+    - [설치](#설치)
+    - [사용](#사용)
+      - [CSS](#css)
+      - [SCSS](#scss)
   - [BUILD경로 변경](#build경로-변경)
   - [배포시 주의점](#배포시-주의점)
   - [구동 모드](#구동-모드)
@@ -20,7 +25,7 @@
   - [Store](#store)
     - [Store를 선언 후 내부의 값을 확인 하는법](#store를-선언-후-내부의-값을-확인-하는법)
   - [SPA Router](#spa-router)
-    - [설치](#설치)
+    - [설치](#설치-1)
     - [사용법](#사용법)
   - [vitejs root 설정](#vitejs-root-설정)
     - [vite.config.js 수정](#viteconfigjs-수정)
@@ -28,14 +33,14 @@
   - [경로 별칭 설정](#경로-별칭-설정)
   - [비동기 처리](#비동기-처리)
   - [IConify](#iconify)
-    - [설치](#설치-1)
-    - [사용](#사용)
-    - [참고](#참고)
-  - [Supabase 사용](#supabase-사용)
     - [설치](#설치-2)
     - [사용](#사용-1)
-  - [StoryBook](#storybook)
+    - [참고](#참고)
+  - [Supabase 사용](#supabase-사용)
     - [설치](#설치-3)
+    - [사용](#사용-2)
+  - [StoryBook](#storybook)
+    - [설치](#설치-4)
     - [실행](#실행)
 
 ## 프로젝트 설치
@@ -79,6 +84,36 @@
   }
 ```
 
+## bootstrap
+
+### 설치
+
+> npm i bootstrap
+
+### 사용
+
+#### CSS
+
+- +layout.svelte 수정
+
+  ```js
+    <script>
+      import { onMount } from 'svelte';
+      import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+    </script>
+
+    <slot />
+  ```
+
+#### SCSS
+
+- app.scss 수정
+  ```css
+  @import "bootstrap/scss/bootstrap";
+  ```
+- 만약 Deprecation Warning 발생시 sass를 1.49.0으로 설치한다.
+  > npm i sass@1.49.0
+
 ## BUILD경로 변경
 
 - svelte.config.js 수정
@@ -89,7 +124,7 @@
   /** @type {import('@sveltejs/kit').Config} */
   const config = {
     kit: {
-      adapter: adapter({ out: "build" }), // <-- 수정
+    + adapter: adapter({ out: "build" }), // <-- 수정
     },
   };
 

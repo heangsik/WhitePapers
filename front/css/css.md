@@ -4,6 +4,9 @@
   - [SCSS 설정](#scss-설정)
     - [설치](#설치)
     - [사용](#사용)
+  - [Tailwind SCSS 동시사용](#tailwind-scss-동시사용)
+    - [설치](#설치-1)
+    - [설정](#설정)
   - [TIPS](#tips)
     - [하단에 베너 고정 시키기](#하단에-베너-고정-시키기)
     - [화명 중앙에 배치 하기](#화명-중앙에-배치-하기)
@@ -15,6 +18,25 @@
 > npm install -D sass
 
 ### 사용
+
+- svelte.config.js 수정
+
+```js
+import adapter from '@sveltejs/adapter-auto';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+	preprocess: vitePreprocess({ scss: true }), <-- 수정
+
+	kit: {
+		adapter: adapter()
+	}
+};
+
+export default config;
+
+```
 
 - src/app.scss파일 생성
 
@@ -31,7 +53,7 @@
   ```js
   ....
   <style lang="scss" global>
-    @import "../app.scss";
+    @use "../app.scss"; <-- import에서 use로 변경됨
   </style>
 
   ```
@@ -64,6 +86,96 @@
         }
       }
     }
+  </style>
+  ```
+
+## Tailwind SCSS 동시사용
+
+### 설치
+
+```bash
+npm install -D tailwindcss postcss autoprefixer sass@1.79.6
+npx tailwindcss init -p
+```
+
+- sass@1.79.6를 사용하는 이유는 1.80부터 사용법이 변경되기 시작한다.
+
+### 설정
+
+- tailwind.config.js 수정
+
+  ```js
+  /** @type {import('tailwindcss').Config} */
+  export default {
+    content: ['./src/**/*.{html,js,svelte,ts,scss,css}'], <-- 수정
+    theme: {
+      extend: {}
+    },
+    plugins: []
+  };
+  ```
+
+- app.scss 수정
+
+  - app.css -> app.scss로 변경
+
+  ```css
+  @tailwind base;       <-- 추가
+  @tailwind components; <-- 추가
+  @tailwind utilities;  <-- 추가
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  ```
+
+- svelte.config.js 수정
+
+  ```js
+  import adapter from '@sveltejs/adapter-auto';
+  import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+
+  /** @type {import('@sveltejs/kit').Config} */
+  const config = {
+    preprocess: vitePreprocess({
+      scss: true,     <-- 추가
+    }),
+
+    kit: {
+      adapter: adapter()
+    }
+  };
+
+  export default config;
+
+  ```
+
+- layout.svelte tnwjd
+
+  ```css
+  ....
+  <style>
+    @import '../app.scss';<-- 추가
+
+   // 사용 예시
+    .custom-component {
+    // Tailwind의 믹스인 사용
+    @apply text-lg font-bold p-4;
+
+    // SCSS 문법과 혼합 사용
+    &:hover {
+      @apply bg-blue-500;
+      transform: scale(1.1);
+    }
+
+    // 미디어 쿼리에서도 활용 가능
+    @screen md {
+      @apply text-xl p-6;
+    }
+  }
   </style>
   ```
 
