@@ -139,3 +139,16 @@ docker run hello-world
 - **`docker system prune`**: 사용하지 않는 컨테이너, 이미지, 네트워크 등을 한꺼번에 정리.
 - **`docker image prune`**: 사용하지 않는 이미지를 정리.
 - **`docker container prune`**: 중지된 컨테이너를 삭제.
+
+## 이미지 생성
+
+- **`docker build -t 이미지이름:tag .`**
+- sample
+  > docker build -t test-web:latest .
+
+## docker compose
+
+- 실행 docker compose up -d --build
+  - -d 백그라운드 실행
+  - --build 필요시 도커 이미지 재 생성
+- 종료 docker compose down
