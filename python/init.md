@@ -1,7 +1,6 @@
 # Python Project Initialization
 
 - [Python Project Initialization](#python-project-initialization)
-- [Python Project Initialization](#python-project-initialization-1)
   - [1. 프로젝트 생성](#1-프로젝트-생성)
   - [2. pip업데이트](#2-pip업데이트)
   - [3. Streamlit](#3-streamlit)
@@ -33,8 +32,6 @@
   - [참고 링크](#참고-링크)
 
 ---
-
-# Python Project Initialization
 
 ## 1. 프로젝트 생성
 

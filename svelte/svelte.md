@@ -20,12 +20,15 @@
   - [tailwind (with SvelteKit)설치](#tailwind-with-sveltekit설치)
     - [Svelte](#svelte-1)
     - [SvelteKit](#sveltekit-1)
+  - [Flowbite](#flowbite)
+    - [설치](#설치-1)
+    - [설정](#설정)
   - [Code Formatting](#code-formatting)
   - [Test](#test)
   - [Store](#store)
     - [Store를 선언 후 내부의 값을 확인 하는법](#store를-선언-후-내부의-값을-확인-하는법)
   - [SPA Router](#spa-router)
-    - [설치](#설치-1)
+    - [설치](#설치-2)
     - [사용법](#사용법)
   - [vitejs root 설정](#vitejs-root-설정)
     - [vite.config.js 수정](#viteconfigjs-수정)
@@ -33,14 +36,14 @@
   - [경로 별칭 설정](#경로-별칭-설정)
   - [비동기 처리](#비동기-처리)
   - [IConify](#iconify)
-    - [설치](#설치-2)
+    - [설치](#설치-3)
     - [사용](#사용-1)
     - [참고](#참고)
   - [Supabase 사용](#supabase-사용)
-    - [설치](#설치-3)
+    - [설치](#설치-4)
     - [사용](#사용-2)
   - [StoryBook](#storybook)
-    - [설치](#설치-4)
+    - [설치](#설치-5)
     - [실행](#실행)
 
 ## 프로젝트 설치
@@ -59,7 +62,7 @@
 - npm
 
   ```
-    npm init svelte@next project_name
+    npx sv create project_name
     cd project_name
     npm i
     npm run dev
@@ -272,6 +275,30 @@
     }
     // .......
   ```
+
+## Flowbite
+
+### 설치
+
+- npm i -D flowbite-svelte flowbite flowbite-svelte-icons
+
+### 설정
+
+- tailwind.config.cjs 수정
+
+```js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./src/**/*.{html,js,svelte,ts,scss,css}",
+    "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}" < --추가,
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [require('flowbite/plugin')], <-- 수정
+};
+```
 
 ## Code Formatting
 

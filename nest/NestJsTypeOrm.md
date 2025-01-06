@@ -170,7 +170,8 @@ export class AppModule {}
       envFilePath: '.env',
       load: [config],
       }),
-      TypeOrmModule.forRoot({ // <---요기부터      type: 'sqlite',
+      TypeOrmModule.forRoot({ // <---요기부터
+      type: 'sqlite',
       database: "crud.db", // 파일 생성 이름
       entities: ["dist/**/*.entity.{js, ts}"], // entity 위치 및 파일 이름
       synchronize: true, // 구동시 테이블 생성여부 운영은 이렇게 하면 큰일난다.
