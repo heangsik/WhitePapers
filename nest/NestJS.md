@@ -2,7 +2,8 @@
 
 ## 목차
 
-- [NestJs 셋팅](#nestjs-셋팅)
+- [NestJs 셋팅](#nestjs-셋팅)- [NestJs 셋팅](#nestjs-셋팅)
+
   - [목차](#목차)
   - [NodeJs 설치](#nodejs-설치)
   - [프로젝트 생성](#프로젝트-생성)
@@ -286,34 +287,101 @@ bootstrap();
 ## 응답전문에 값제거
 
 - 응답전문에 특정값을 제거 하고자 할때 예) 유저정보중 패스워드 등
+- npm i class-transformer class-validator
+- 방법 1
 
-  ```TypeScript
-    //entity 파일에 제거 하고자 하는 값에 Exclude 데코레이터를 단다.
-    @Entity()
-    export class User{
-      @Colummn()
-      UserId: string;
-      @Colummn()
-      UserAge: number;
-      @Colummn()
-      @Exculude() // <<---- 추가
-      Password: string;
-      constructor(partial: Partial<전달받는_Dto>) {
-        Object.assign(this, partial);
+  - code
+
+    ```TypeScript
+      //entity 파일에 제거 하고자 하는 값에 Exclude 데코레이터를 단다.
+      @Entity()
+      export class User{
+        @Colummn()
+        UserId: string;
+        @Colummn()
+        UserAge: number;
+        @Colummn()
+        @Exculude() // <<---- 추가
+        Password: string;
+        constructor(partial: Partial<전달받는_Dto>) {
+          Object.assign(this, partial);
+        }
+      }
+    ```
+
+  - 응답을 하는 메서드에 추가
+
+    ```TypeScript
+    @UseInterceptors(ClassSerializerInterceptor) //<-- 응답을 반환하는 메서드에 붙인다.
+    ```
+
+  - main.ts 추가
+    ```
+    app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+    ```
+
+- 방법 2
+
+  - dto를 만들어 변환한다.
+
+    ```ts
+    import { Exclude, Expose } from 'class-transformer';
+
+    class ResponseDto{
+      @Expose()
+      id: string;
+      @Expose()
+      name: string;
+    }
+
+    @Injectable()
+    export class UserService{
+      getUser():{
+        const oriData = {
+          id = '1',
+          name = 'tname',
+          password = 'pass123234'
+        }
+
+        return plainToClass(ResponseDto, oriData);
       }
     }
-  ```
 
-- 응답을 하는 메서드에 추가
+    ```
 
-- ```TypeScript
-    @UseInterceptors(ClassSerializerInterceptor) //<-- 응답을 반환하는 메서드에 붙인다.
-  ```
+## Nest g 명령어
 
-- main.ts 추가
-  ```
-    app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
-  ```
+- 기본 명령어
+
+| 명령어      | 설명                            | 단축어 | 사용 예시                                |
+| ----------- | ------------------------------- | ------ | ---------------------------------------- |
+| application | 새로운 NestJS 애플리케이션 생성 | app    | `nest g app my-app`                      |
+| class       | 새로운 클래스 생성              | cl     | `nest g cl users/dto/create-user`        |
+| controller  | 새로운 컨트롤러 생성            | co     | `nest g co users`                        |
+| decorator   | 커스텀 데코레이터 생성          | d      | `nest g d common/validators/user`        |
+| filter      | 예외 필터 생성                  | f      | `nest g f common/filters/http-exception` |
+| gateway     | Websocket 게이트웨이 생성       | ga     | `nest g ga events`                       |
+| guard       | 새로운 가드 생성                | gu     | `nest g gu auth`                         |
+| interceptor | 새로운 인터셉터 생성            | in     | `nest g in logging`                      |
+| interface   | 새로운 인터페이스 생성          | i      | `nest g i users/interfaces/user`         |
+| middleware  | 새로운 미들웨어 생성            | mi     | `nest g mi logger`                       |
+| module      | 새로운 모듈 생성                | mo     | `nest g mo users`                        |
+| pipe        | 새로운 파이프 생성              | pi     | `nest g pi validation`                   |
+| provider    | 새로운 프로바이더 생성          | pr     | `nest g pr users/services/users`         |
+| resolver    | GraphQL 리졸버 생성             | r      | `nest g r users`                         |
+| service     | 새로운 서비스 생성              | s      | `nest g s users`                         |
+| library     | 새로운 라이브러리 생성          | lib    | `nest g lib common`                      |
+| sub-app     | 새로운 서브 애플리케이션 생성   | -      | `nest g sub-app admin`                   |
+| resource    | CRUD 리소스 생성                | res    | `nest g res users`                       |
+
+- 추가 명령어
+
+| 옵션          | 설명                                 |
+| ------------- | ------------------------------------ |
+| --dry-run     | 실제 파일을 생성하지 않고 미리보기   |
+| --flat        | 디렉토리를 생성하지 않고 파일만 생성 |
+| --no-spec     | 테스트 파일을 생성하지 않음          |
+| --skip-import | 모듈에 자동 임포트하지 않음          |
 
 ## 패스워드 암호화
 
