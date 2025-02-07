@@ -383,6 +383,76 @@ bootstrap();
 | --no-spec     | 테스트 파일을 생성하지 않음          |
 | --skip-import | 모듈에 자동 임포트하지 않음          |
 
+## Exception별 응답 코드
+
+## ✅ NestJS 기본 예외 및 HTTP 상태 코드 매핑
+
+| 예외 클래스                     | HTTP 상태 코드 | 설명                                         |
+| ------------------------------- | -------------- | -------------------------------------------- |
+| `BadRequestException`           | `400`          | 잘못된 요청 (클라이언트 입력 오류)           |
+| `UnauthorizedException`         | `401`          | 인증 실패 (토큰 누락, 유효하지 않은 토큰 등) |
+| `PaymentRequiredException`      | `402`          | 결제 필요 (잘 사용되지 않음)                 |
+| `ForbiddenException`            | `403`          | 권한 없음 (인가 실패)                        |
+| `NotFoundException`             | `404`          | 리소스를 찾을 수 없음                        |
+| `MethodNotAllowedException`     | `405`          | 지원되지 않는 HTTP 메서드 요청               |
+| `NotAcceptableException`        | `406`          | 클라이언트가 수락할 수 없는 응답 형식        |
+| `RequestTimeoutException`       | `408`          | 요청 시간 초과                               |
+| `ConflictException`             | `409`          | 데이터 충돌 (중복 데이터 등)                 |
+| `GoneException`                 | `410`          | 더 이상 사용되지 않는 리소스                 |
+| `PayloadTooLargeException`      | `413`          | 요청 데이터 크기가 너무 큼                   |
+| `UnsupportedMediaTypeException` | `415`          | 지원되지 않는 콘텐츠 타입 요청               |
+| `UnprocessableEntityException`  | `422`          | 유효성 검사 실패                             |
+| `InternalServerErrorException`  | `500`          | 서버 내부 오류                               |
+| `NotImplementedException`       | `501`          | 아직 구현되지 않은 기능                      |
+| `BadGatewayException`           | `502`          | 게이트웨이 서버 오류                         |
+| `ServiceUnavailableException`   | `503`          | 서버 과부하 또는 유지보수 중                 |
+| `GatewayTimeoutException`       | `504`          | 게이트웨이 요청 시간 초과                    |
+
+## HTTPS 상태 코드
+
+# ✅ NestJS HttpStatus 코드 매핑
+
+| 상태 코드 | `HttpStatus` 상수                          | 설명                        |
+| --------- | ------------------------------------------ | --------------------------- |
+| `100`     | `HttpStatus.CONTINUE`                      | 계속 진행                   |
+| `101`     | `HttpStatus.SWITCHING_PROTOCOLS`           | 프로토콜 변경               |
+| `102`     | `HttpStatus.PROCESSING`                    | 처리 중                     |
+| `200`     | `HttpStatus.OK`                            | 요청 성공                   |
+| `201`     | `HttpStatus.CREATED`                       | 생성됨                      |
+| `202`     | `HttpStatus.ACCEPTED`                      | 요청 수락                   |
+| `203`     | `HttpStatus.NON_AUTHORITATIVE_INFORMATION` | 신뢰할 수 없는 정보         |
+| `204`     | `HttpStatus.NO_CONTENT`                    | 콘텐츠 없음                 |
+| `205`     | `HttpStatus.RESET_CONTENT`                 | 콘텐츠 리셋                 |
+| `206`     | `HttpStatus.PARTIAL_CONTENT`               | 일부 콘텐츠                 |
+| `300`     | `HttpStatus.MULTIPLE_CHOICES`              | 여러 선택지                 |
+| `301`     | `HttpStatus.MOVED_PERMANENTLY`             | 영구 이동                   |
+| `302`     | `HttpStatus.FOUND`                         | 일시적 이동                 |
+| `303`     | `HttpStatus.SEE_OTHER`                     | 다른 위치 참조              |
+| `304`     | `HttpStatus.NOT_MODIFIED`                  | 변경되지 않음               |
+| `307`     | `HttpStatus.TEMPORARY_REDIRECT`            | 임시 리디렉션               |
+| `308`     | `HttpStatus.PERMANENT_REDIRECT`            | 영구 리디렉션               |
+| `400`     | `HttpStatus.BAD_REQUEST`                   | 잘못된 요청                 |
+| `401`     | `HttpStatus.UNAUTHORIZED`                  | 인증 실패                   |
+| `402`     | `HttpStatus.PAYMENT_REQUIRED`              | 결제 필요                   |
+| `403`     | `HttpStatus.FORBIDDEN`                     | 접근 금지                   |
+| `404`     | `HttpStatus.NOT_FOUND`                     | 리소스 없음                 |
+| `405`     | `HttpStatus.METHOD_NOT_ALLOWED`            | 메서드 허용 안 됨           |
+| `406`     | `HttpStatus.NOT_ACCEPTABLE`                | 허용되지 않는 요청          |
+| `408`     | `HttpStatus.REQUEST_TIMEOUT`               | 요청 시간 초과              |
+| `409`     | `HttpStatus.CONFLICT`                      | 충돌 발생                   |
+| `410`     | `HttpStatus.GONE`                          | 삭제된 리소스               |
+| `411`     | `HttpStatus.LENGTH_REQUIRED`               | 길이 필요                   |
+| `412`     | `HttpStatus.PRECONDITION_FAILED`           | 사전 조건 실패              |
+| `413`     | `HttpStatus.PAYLOAD_TOO_LARGE`             | 요청 본문이 너무 큼         |
+| `415`     | `HttpStatus.UNSUPPORTED_MEDIA_TYPE`        | 지원되지 않는 타입          |
+| `422`     | `HttpStatus.UNPROCESSABLE_ENTITY`          | 처리할 수 없는 엔티티       |
+| `429`     | `HttpStatus.TOO_MANY_REQUESTS`             | 너무 많은 요청 (Rate Limit) |
+| `500`     | `HttpStatus.INTERNAL_SERVER_ERROR`         | 서버 내부 오류              |
+| `501`     | `HttpStatus.NOT_IMPLEMENTED`               | 구현되지 않음               |
+| `502`     | `HttpStatus.BAD_GATEWAY`                   | 게이트웨이 오류             |
+| `503`     | `HttpStatus.SERVICE_UNAVAILABLE`           | 서비스 불가                 |
+| `504`     | `HttpStatus.GATEWAY_TIMEOUT`               | 게이트웨이 시간 초과        |
+
 ## 패스워드 암호화
 
 - npm i bcrypt @types/bcrypt 설치
