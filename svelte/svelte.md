@@ -62,7 +62,7 @@
 - npm
 
   ```
-    npx sv create project_name
+    npx sv create  project_name
     cd project_name
     npm i
     npm run dev

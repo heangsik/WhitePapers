@@ -2,8 +2,7 @@
 
 ## 목차
 
-- [NestJs 셋팅](#nestjs-셋팅)- [NestJs 셋팅](#nestjs-셋팅)
-
+- [NestJs 셋팅](#nestjs-셋팅)
   - [목차](#목차)
   - [NodeJs 설치](#nodejs-설치)
   - [프로젝트 생성](#프로젝트-생성)
@@ -17,7 +16,11 @@
   - [TypeOrm Sqlite 셋팅](#typeorm-sqlite-셋팅)
   - [TypeOrm 설정정보 파일로 빼기](#typeorm-설정정보-파일로-빼기)
   - [응답전문에 값제거](#응답전문에-값제거)
-  - [Todo](#todo)
+  - [Nest g 명령어](#nest-g-명령어)
+  - [Exception별 응답 코드](#exception별-응답-코드)
+  - [NestJS 기본 예외 및 HTTP 상태 코드 매핑](#nestjs-기본-예외-및-http-상태-코드-매핑)
+- [NestJS HttpStatus 코드 매핑](#nestjs-httpstatus-코드-매핑)
+  - [패스워드 암호화](#패스워드-암호화)
 
 ## NodeJs 설치
 
@@ -385,7 +388,7 @@ bootstrap();
 
 ## Exception별 응답 코드
 
-## ✅ NestJS 기본 예외 및 HTTP 상태 코드 매핑
+## NestJS 기본 예외 및 HTTP 상태 코드 매핑
 
 | 예외 클래스                     | HTTP 상태 코드 | 설명                                         |
 | ------------------------------- | -------------- | -------------------------------------------- |
@@ -408,9 +411,7 @@ bootstrap();
 | `ServiceUnavailableException`   | `503`          | 서버 과부하 또는 유지보수 중                 |
 | `GatewayTimeoutException`       | `504`          | 게이트웨이 요청 시간 초과                    |
 
-## HTTPS 상태 코드
-
-# ✅ NestJS HttpStatus 코드 매핑
+# NestJS HttpStatus 코드 매핑
 
 | 상태 코드 | `HttpStatus` 상수                          | 설명                        |
 | --------- | ------------------------------------------ | --------------------------- |
