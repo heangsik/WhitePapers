@@ -16,6 +16,7 @@
   - [TypeOrm Sqlite 셋팅](#typeorm-sqlite-셋팅)
   - [TypeOrm 설정정보 파일로 빼기](#typeorm-설정정보-파일로-빼기)
   - [응답전문에 값제거](#응답전문에-값제거)
+  - [Nest Api](#nest-api)
   - [Nest g 명령어](#nest-g-명령어)
   - [Exception별 응답 코드](#exception별-응답-코드)
   - [NestJS 기본 예외 및 HTTP 상태 코드 매핑](#nestjs-기본-예외-및-http-상태-코드-매핑)
@@ -351,6 +352,38 @@ bootstrap();
     }
 
     ```
+
+## Nest Api
+
+- 설치
+  ```sh
+  npm i @nestjs/swagger
+  ```
+- main.ts 수정
+
+  ```ts
+  async function bootstrap() {
+    const app = await NestFactory.create(AppModule);
+
+    const docBuilder = new DocumentBuilder()
+      .setTitle("Meeting Rooom Documentation")
+      .setDescription("The Meeting Room API description")
+      .setVersion("1.0")
+      .addTag("meeting-room")
+      .addBearerAuth()
+      .build();
+
+    const docFactory = SwaggerModule.createDocument(app, docBuilder);
+    SwaggerModule.setup("api", app, docFactory);
+
+    await app.listen(process.env.APP_PORT ?? 1000);
+  }
+  ```
+
+- 확인
+  > http://localhost:3000/api
+- 참고자료
+  - [참고](https://docs.nestjs.com/openapi/introduction)
 
 ## Nest g 명령어
 
