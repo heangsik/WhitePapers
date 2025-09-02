@@ -192,6 +192,12 @@ poetry install
 
 [참고링크](https://velog.io/@hongjunland/FastAPI-%ED%86%B5%ED%95%A9%ED%85%8C%EC%8A%A4%ED%8A%B8-TestClient)
 
+```
+@startuml
+Alice -> Bob: Hello
+@enduml
+```
+
 ```mermaid
 sequenceDiagram
     Alice->>John: Hello John, how are you?
