@@ -16,7 +16,12 @@
   - [TypeOrm Sqlite 셋팅](#typeorm-sqlite-셋팅)
   - [TypeOrm 설정정보 파일로 빼기](#typeorm-설정정보-파일로-빼기)
   - [응답전문에 값제거](#응답전문에-값제거)
-  - [Todo](#todo)
+  - [Nest Api](#nest-api)
+  - [Nest g 명령어](#nest-g-명령어)
+  - [Exception별 응답 코드](#exception별-응답-코드)
+  - [NestJS 기본 예외 및 HTTP 상태 코드 매핑](#nestjs-기본-예외-및-http-상태-코드-매핑)
+- [NestJS HttpStatus 코드 매핑](#nestjs-httpstatus-코드-매핑)
+  - [패스워드 암호화](#패스워드-암호화)
 
 ## NodeJs 설치
 
@@ -286,34 +291,201 @@ bootstrap();
 ## 응답전문에 값제거
 
 - 응답전문에 특정값을 제거 하고자 할때 예) 유저정보중 패스워드 등
+- npm i class-transformer class-validator
+- 방법 1
 
-  ```TypeScript
-    //entity 파일에 제거 하고자 하는 값에 Exclude 데코레이터를 단다.
-    @Entity()
-    export class User{
-      @Colummn()
-      UserId: string;
-      @Colummn()
-      UserAge: number;
-      @Colummn()
-      @Exculude() // <<---- 추가
-      Password: string;
-      constructor(partial: Partial<전달받는_Dto>) {
-        Object.assign(this, partial);
+  - code
+
+    ```TypeScript
+      //entity 파일에 제거 하고자 하는 값에 Exclude 데코레이터를 단다.
+      @Entity()
+      export class User{
+        @Colummn()
+        UserId: string;
+        @Colummn()
+        UserAge: number;
+        @Colummn()
+        @Exculude() // <<---- 추가
+        Password: string;
+        constructor(partial: Partial<전달받는_Dto>) {
+          Object.assign(this, partial);
+        }
+      }
+    ```
+
+  - 응답을 하는 메서드에 추가
+
+    ```TypeScript
+    @UseInterceptors(ClassSerializerInterceptor) //<-- 응답을 반환하는 메서드에 붙인다.
+    ```
+
+  - main.ts 추가
+    ```
+    app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+    ```
+
+- 방법 2
+
+  - dto를 만들어 변환한다.
+
+    ```ts
+    import { Exclude, Expose } from 'class-transformer';
+
+    class ResponseDto{
+      @Expose()
+      id: string;
+      @Expose()
+      name: string;
+    }
+
+    @Injectable()
+    export class UserService{
+      getUser():{
+        const oriData = {
+          id = '1',
+          name = 'tname',
+          password = 'pass123234'
+        }
+
+        return plainToClass(ResponseDto, oriData);
       }
     }
+
+    ```
+
+## Nest Api
+
+- 설치
+  ```sh
+  npm i @nestjs/swagger
+  ```
+- main.ts 수정
+
+  ```ts
+  async function bootstrap() {
+    const app = await NestFactory.create(AppModule);
+
+    const docBuilder = new DocumentBuilder()
+      .setTitle("Meeting Rooom Documentation")
+      .setDescription("The Meeting Room API description")
+      .setVersion("1.0")
+      .addTag("meeting-room")
+      .addBearerAuth()
+      .build();
+
+    const docFactory = SwaggerModule.createDocument(app, docBuilder);
+    SwaggerModule.setup("api", app, docFactory);
+
+    await app.listen(process.env.APP_PORT ?? 1000);
+  }
   ```
 
-- 응답을 하는 메서드에 추가
+- 확인
+  > http://localhost:3000/api
+- 참고자료
+  - [참고](https://docs.nestjs.com/openapi/introduction)
 
-- ```TypeScript
-    @UseInterceptors(ClassSerializerInterceptor) //<-- 응답을 반환하는 메서드에 붙인다.
-  ```
+## Nest g 명령어
 
-- main.ts 추가
-  ```
-    app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
-  ```
+- 기본 명령어
+
+| 명령어      | 설명                            | 단축어 | 사용 예시                                |
+| ----------- | ------------------------------- | ------ | ---------------------------------------- |
+| application | 새로운 NestJS 애플리케이션 생성 | app    | `nest g app my-app`                      |
+| class       | 새로운 클래스 생성              | cl     | `nest g cl users/dto/create-user`        |
+| controller  | 새로운 컨트롤러 생성            | co     | `nest g co users`                        |
+| decorator   | 커스텀 데코레이터 생성          | d      | `nest g d common/validators/user`        |
+| filter      | 예외 필터 생성                  | f      | `nest g f common/filters/http-exception` |
+| gateway     | Websocket 게이트웨이 생성       | ga     | `nest g ga events`                       |
+| guard       | 새로운 가드 생성                | gu     | `nest g gu auth`                         |
+| interceptor | 새로운 인터셉터 생성            | in     | `nest g in logging`                      |
+| interface   | 새로운 인터페이스 생성          | i      | `nest g i users/interfaces/user`         |
+| middleware  | 새로운 미들웨어 생성            | mi     | `nest g mi logger`                       |
+| module      | 새로운 모듈 생성                | mo     | `nest g mo users`                        |
+| pipe        | 새로운 파이프 생성              | pi     | `nest g pi validation`                   |
+| provider    | 새로운 프로바이더 생성          | pr     | `nest g pr users/services/users`         |
+| resolver    | GraphQL 리졸버 생성             | r      | `nest g r users`                         |
+| service     | 새로운 서비스 생성              | s      | `nest g s users`                         |
+| library     | 새로운 라이브러리 생성          | lib    | `nest g lib common`                      |
+| sub-app     | 새로운 서브 애플리케이션 생성   | -      | `nest g sub-app admin`                   |
+| resource    | CRUD 리소스 생성                | res    | `nest g res users`                       |
+
+- 추가 명령어
+
+| 옵션          | 설명                                 |
+| ------------- | ------------------------------------ |
+| --dry-run     | 실제 파일을 생성하지 않고 미리보기   |
+| --flat        | 디렉토리를 생성하지 않고 파일만 생성 |
+| --no-spec     | 테스트 파일을 생성하지 않음          |
+| --skip-import | 모듈에 자동 임포트하지 않음          |
+
+## Exception별 응답 코드
+
+## NestJS 기본 예외 및 HTTP 상태 코드 매핑
+
+| 예외 클래스                     | HTTP 상태 코드 | 설명                                         |
+| ------------------------------- | -------------- | -------------------------------------------- |
+| `BadRequestException`           | `400`          | 잘못된 요청 (클라이언트 입력 오류)           |
+| `UnauthorizedException`         | `401`          | 인증 실패 (토큰 누락, 유효하지 않은 토큰 등) |
+| `PaymentRequiredException`      | `402`          | 결제 필요 (잘 사용되지 않음)                 |
+| `ForbiddenException`            | `403`          | 권한 없음 (인가 실패)                        |
+| `NotFoundException`             | `404`          | 리소스를 찾을 수 없음                        |
+| `MethodNotAllowedException`     | `405`          | 지원되지 않는 HTTP 메서드 요청               |
+| `NotAcceptableException`        | `406`          | 클라이언트가 수락할 수 없는 응답 형식        |
+| `RequestTimeoutException`       | `408`          | 요청 시간 초과                               |
+| `ConflictException`             | `409`          | 데이터 충돌 (중복 데이터 등)                 |
+| `GoneException`                 | `410`          | 더 이상 사용되지 않는 리소스                 |
+| `PayloadTooLargeException`      | `413`          | 요청 데이터 크기가 너무 큼                   |
+| `UnsupportedMediaTypeException` | `415`          | 지원되지 않는 콘텐츠 타입 요청               |
+| `UnprocessableEntityException`  | `422`          | 유효성 검사 실패                             |
+| `InternalServerErrorException`  | `500`          | 서버 내부 오류                               |
+| `NotImplementedException`       | `501`          | 아직 구현되지 않은 기능                      |
+| `BadGatewayException`           | `502`          | 게이트웨이 서버 오류                         |
+| `ServiceUnavailableException`   | `503`          | 서버 과부하 또는 유지보수 중                 |
+| `GatewayTimeoutException`       | `504`          | 게이트웨이 요청 시간 초과                    |
+
+# NestJS HttpStatus 코드 매핑
+
+| 상태 코드 | `HttpStatus` 상수                          | 설명                        |
+| --------- | ------------------------------------------ | --------------------------- |
+| `100`     | `HttpStatus.CONTINUE`                      | 계속 진행                   |
+| `101`     | `HttpStatus.SWITCHING_PROTOCOLS`           | 프로토콜 변경               |
+| `102`     | `HttpStatus.PROCESSING`                    | 처리 중                     |
+| `200`     | `HttpStatus.OK`                            | 요청 성공                   |
+| `201`     | `HttpStatus.CREATED`                       | 생성됨                      |
+| `202`     | `HttpStatus.ACCEPTED`                      | 요청 수락                   |
+| `203`     | `HttpStatus.NON_AUTHORITATIVE_INFORMATION` | 신뢰할 수 없는 정보         |
+| `204`     | `HttpStatus.NO_CONTENT`                    | 콘텐츠 없음                 |
+| `205`     | `HttpStatus.RESET_CONTENT`                 | 콘텐츠 리셋                 |
+| `206`     | `HttpStatus.PARTIAL_CONTENT`               | 일부 콘텐츠                 |
+| `300`     | `HttpStatus.MULTIPLE_CHOICES`              | 여러 선택지                 |
+| `301`     | `HttpStatus.MOVED_PERMANENTLY`             | 영구 이동                   |
+| `302`     | `HttpStatus.FOUND`                         | 일시적 이동                 |
+| `303`     | `HttpStatus.SEE_OTHER`                     | 다른 위치 참조              |
+| `304`     | `HttpStatus.NOT_MODIFIED`                  | 변경되지 않음               |
+| `307`     | `HttpStatus.TEMPORARY_REDIRECT`            | 임시 리디렉션               |
+| `308`     | `HttpStatus.PERMANENT_REDIRECT`            | 영구 리디렉션               |
+| `400`     | `HttpStatus.BAD_REQUEST`                   | 잘못된 요청                 |
+| `401`     | `HttpStatus.UNAUTHORIZED`                  | 인증 실패                   |
+| `402`     | `HttpStatus.PAYMENT_REQUIRED`              | 결제 필요                   |
+| `403`     | `HttpStatus.FORBIDDEN`                     | 접근 금지                   |
+| `404`     | `HttpStatus.NOT_FOUND`                     | 리소스 없음                 |
+| `405`     | `HttpStatus.METHOD_NOT_ALLOWED`            | 메서드 허용 안 됨           |
+| `406`     | `HttpStatus.NOT_ACCEPTABLE`                | 허용되지 않는 요청          |
+| `408`     | `HttpStatus.REQUEST_TIMEOUT`               | 요청 시간 초과              |
+| `409`     | `HttpStatus.CONFLICT`                      | 충돌 발생                   |
+| `410`     | `HttpStatus.GONE`                          | 삭제된 리소스               |
+| `411`     | `HttpStatus.LENGTH_REQUIRED`               | 길이 필요                   |
+| `412`     | `HttpStatus.PRECONDITION_FAILED`           | 사전 조건 실패              |
+| `413`     | `HttpStatus.PAYLOAD_TOO_LARGE`             | 요청 본문이 너무 큼         |
+| `415`     | `HttpStatus.UNSUPPORTED_MEDIA_TYPE`        | 지원되지 않는 타입          |
+| `422`     | `HttpStatus.UNPROCESSABLE_ENTITY`          | 처리할 수 없는 엔티티       |
+| `429`     | `HttpStatus.TOO_MANY_REQUESTS`             | 너무 많은 요청 (Rate Limit) |
+| `500`     | `HttpStatus.INTERNAL_SERVER_ERROR`         | 서버 내부 오류              |
+| `501`     | `HttpStatus.NOT_IMPLEMENTED`               | 구현되지 않음               |
+| `502`     | `HttpStatus.BAD_GATEWAY`                   | 게이트웨이 오류             |
+| `503`     | `HttpStatus.SERVICE_UNAVAILABLE`           | 서비스 불가                 |
+| `504`     | `HttpStatus.GATEWAY_TIMEOUT`               | 게이트웨이 시간 초과        |
 
 ## 패스워드 암호화
 

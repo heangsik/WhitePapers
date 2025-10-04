@@ -34,8 +34,6 @@
 
 ---
 
-# Python Project Initialization
-
 ## 1. 프로젝트 생성
 
 - 희망하는 위치에 프로젝트 디렉토리를 만든다.
@@ -194,6 +192,12 @@ poetry install
 ## 참고 링크
 
 [참고링크](https://velog.io/@hongjunland/FastAPI-%ED%86%B5%ED%95%A9%ED%85%8C%EC%8A%A4%ED%8A%B8-TestClient)
+
+```
+@startuml
+Alice -> Bob: Hello
+@enduml
+```
 
 ```mermaid
 sequenceDiagram

@@ -104,6 +104,8 @@ docker run hello-world
     - `-p [호스트포트]:[컨테이너포트]`: 포트 매핑
     - `--name [컨테이너이름]`: 컨테이너에 이름 지정
     - `-v [호스트디렉토리]:[컨테이너디렉토리]`: 볼륨 마운트
+    - `--rm`: 컨테이너가 종료 후 자동 삭제
+    - `-it` : 컨테이너 실행 후 내부로 진입
 - **`docker ps`**: 실행 중인 컨테이너 목록을 보여준다.
 - **`docker ps -a`**: 실행 중이거나 종료된 모든 컨테이너 목록을 보여준다.
 - **`docker stop [컨테이너ID 또는 이름]`**: 실행 중인 컨테이너를 중지.
@@ -113,6 +115,7 @@ docker run hello-world
   - 예: `docker rm myapp`
 - **`docker exec -it [컨테이너ID 또는 이름] [명령어]`**: 실행 중인 컨테이너 내부에서 명령어를 실행.
   - 예: `docker exec -it myapp /bin/bash`
+  - 예: `docker exec -it myapp sh`
 
 ## 4. 네트워크 관련 명령어
 
