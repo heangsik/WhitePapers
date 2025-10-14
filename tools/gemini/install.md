@@ -2,7 +2,7 @@
 
 ## 설치없이 실행
 
-npx https://github.com/google-gemini/gemini-cli
+> npx https://github.com/google-gemini/gemini-cli
 
 ## 설치
 

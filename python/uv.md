@@ -7,10 +7,14 @@
 
 ## 프로젝트 셋팅
 
-1. uv 초기화
+1. 프로젝트 생성
    - uv init proc_01
    - cd proc_01
-   - uv venv
+   - uv venv or uv venv --python 3.11(버전을 지정하고 싶을때)
+2. 폴더가 이미 있는경우
+   - cd project_dir
+   - uv init
+   - uv venv or uv venv --python 3.11(버전을 지정하고 싶을때)
 
 ## package설치
 
@@ -31,3 +35,7 @@
 ### 실행
 
 - uv run hellp.py
+
+## project.toml 내용 설치
+
+- uv sync
