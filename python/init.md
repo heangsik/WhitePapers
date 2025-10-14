@@ -1,5 +1,6 @@
-# Python Project Initialization
+# Python
 
+- [Python](#python)
 - [Python Project Initialization](#python-project-initialization)
   - [1. 프로젝트 생성](#1-프로젝트-생성)
   - [2. pip업데이트](#2-pip업데이트)
